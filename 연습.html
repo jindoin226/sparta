@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+​
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+​
+    <title>숙제 | 원페이지 쇼핑몰 만들기</title>
+​
+    <style type="text/css">
+        * {
+            font-family: 'Stylish', sans-serif;
+        }
+​
+        .wrap {
+            width: 500px;
+            margin: auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+​
+        .comment {
+            color: black;
+        }
+​
+        .btn-primary {
+            margin: auto;
+        }
+    </style>
+​
+    <script>
+        function hey() {
+            alert('주문이 완료되었습니다');
+        }
+    </script>
+</head>
+​
+<body>
+​
+    <div class="wrap">
+        <img class="card-img-top" src="http://image.kdgmall.xyz/2019120807/9791104920073.jpg"
+            alt="장씨세가 호위무사 제5막 세트 책 조형근 청아람">
+        <div class="comment">
+            <h1>장씨세가 호위무사 제5막 세트 책</h1> 
+            <p> 가격: 1,000,000원/개</p>
+            <p>하북 서남쪽, 심주현에 위치한 세가. 이백 년 전에는 성도를 비롯 서남쪽 중요 거점을 장악했던 곳이었으나 점점 가세가 기울다 오늘날 성도에 세력을 떨치고 있는 석가장에게 공격을 당한다.
+                이에 장씨세가는 재력을 이용해 고수들을 초빙한다. 그사이 선친 때부터 가주를 보좌했던 황 노인은 과거 은정을 베풀었던 한 사내의 기억을 떠올리며 그를 만나러 가는데…… .</p>
+        </div>
+        <div>
+            <h1>주문하기</h1>
+            <div class="mb-3">
+                <div class="input-group is-invalid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validatedInputGroupPrepend">주문자 성함</span>
+                    </div>
+                    <input type="text" class="form-control is-invalid">
+                </div>
+            </div>
+​
+            <div class="mb-3">
+                <div class="input-group is-invalid">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="validatedInputGroupSelect">수량</label>
+                    </div>
+                    <select class="custom-select" id="validatedInputGroupSelect" required>
+                        <option value="">--수량을 선택하세요--</option>
+                        <option value="1">1권</option>
+                        <option value="2">2권</option>
+                        <option value="3">3권</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group is-invalid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validatedInputGroupPrepend">주소</span>
+                    </div>
+                    <input type="text" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend"
+                        required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group is-invalid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validatedInputGroupPrepend">전화번호</span>
+                    </div>
+                    <input type="text" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend"
+                        required>
+                </div>
+            </div>
+            <button onclick="hey()" class="btn btn-primary" type="submit">주문하기</button>
+        </div>
+    </div>
+</body>
+​
+</html>
