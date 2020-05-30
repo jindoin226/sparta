@@ -10,7 +10,7 @@ soup = BeautifulSoup(data.text, 'html.parser')
 
 titles = soup.select('tr.list > td.info > a.title')
 ranks = soup.select('tr.list > td.number')
-artist = soup.select('tr.list > .info > a.artist')
+artists = soup.select('tr.list > .info > a.artist')
 
-for rank,title in zip(ranks, titles, artist) :
+for rank,title,artist in zip(ranks, titles, artists) :
     print(rank.text.split('\n')[0],title.text.strip(),artist.text)
