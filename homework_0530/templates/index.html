@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Webpage Title -->
+    <title>숙제 | 원페이지 쇼핑몰 만들기</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#orders-box').html('');
+            listing();
+        });
+
+        function make_order() {
+            // 1. 주문자 성함, 수량, 주소, 전화번호 내용을 가져옵니다.
+            let buyer = $('#buyer').val();
+            let count = $('#count').val();
+            let address = $('#address').val();
+            let number = $('#number').val();
+            // 2. 주문자 성함, 수량, 주소, 전화번호 중 하나라도 입력하지 않았을 경우 alert를 띄웁니다.
+            if (buyer == '') {
+                alert('주문자 성함을 입력해주세요');
+                $('#buyer').focus();
+                return;
+            } else if (count == '') {
+                alert('수량을 입력해주세요');
+                $('#count').focus();
+                return;
+            } else if (address == '') {
+                alert('주소를 입력해주세요');
+                $('#address').focus();
+                return;
+            } else if (number == '') {
+                alert('전화번호를 입력해주세요');
+                $('#number').focus();
+                return;
+            }
+            // 3. POST /orders 에 저장을 요청합니다.
+            $.ajax({
+                type: 'POST', // 타입을 작성합니다.
+                url: '/orders', // url을 작성합니다.
+                data: { buyer_give: buyer, count_give: count, address_give: address, number_give: number}, // data를 작성합니다. },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function listing() {
+            // 1. 주문 목록을 서버에 요청하기
+            // 2. 요청 성공 여부 확인하기
+            // 3. 요청 성공했을 때 주문을 올바르게 화면에 나타내기
+            $.ajax({
+                type: "GET",
+                url: "/orders",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['orders'];
+                        for (let i = 0; i < orders.length; i++){
+                            make_card(orders[i]['buyer'], orders[i]['count'], orders[i]['address'], orders[i]['number']);
+                        }
+                    } else {
+                        alert('주문내역을 받아오지 못했습니다');
+                    }
+                }
+            })
+        }
+
+        function make_card(buyer, count, address, number) {
+            let temp_html = `<tr>
+                                <td>${buyer}</td>
+                                <td>${count}</td>
+                                <td>${address}</td>
+                                <td>${number}</td>
+                            </tr>`;
+            $('#orders-box').append(temp_html);
+}
+
+        /* function is_long(obj) {
+            let content = $(obj).val();
+            if (content.length > 140) {
+                alert('리뷰는 140자까지 기록할 수 있습니다.');
+                $(obj).val(content.substring(0, content.length - 1));
+            }
+        } */
+    </script>
+
+    <style type="text/css">
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .wrap {
+            width: 500px;
+            margin: auto;
+        }
+
+        .img {
+            background-image: url('http://image.kdgmall.xyz/2019120807/9791104920073.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 500px;
+            height: 300px;
+        }
+
+        .info {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            margin: 20px 5px auto 5px;
+        }
+
+        h1,
+        h5 {
+            display: inline;
+        }
+
+        .order {
+            text-align: center;
+        }
+
+        .orders {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="img"></div>
+        <div class="info">
+            <h1>장씨세가 호위무사 제5막 세트 책</h1> 
+            <p> 가격: 1,000,000원/개</p>
+            <p>하북 서남쪽, 심주현에 위치한 세가. 이백 년 전에는 성도를 비롯 서남쪽 중요 거점을 장악했던 곳이었으나 점점 가세가 기울다 오늘날 성도에 세력을 떨치고 있는 석가장에게 공격을 당한다.
+               이에 장씨세가는 재력을 이용해 고수들을 초빙한다. 그사이 선친 때부터 가주를 보좌했던 황 노인은 과거 은정을 베풀었던 한 사내의 기억을 떠올리며 그를 만나러 가는데…… .</p>
+        </div>
+        <h1>주문하기</h1>
+        <div class="info">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">주문자 성함</span>
+                </div>
+                <input type="text" class="form-control" id="buyer" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">수량</span>
+                </div>
+                <select class="custom-select" id="count" required>  
+                    <option value="">--수량을 선택하세요--</option>
+                    <option value="1">1권</option>
+                    <option value="2">2권</option>
+                    <option value="3">3권</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">주소</span>
+                </div>
+                <input type="text" class="form-control" id="address" aria-describedby="basic-addon3">
+            </div>            
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">전화번호</span>
+                </div>
+                <input type="text" class="form-control" id="number" aria-describedby="basic-addon3">
+            </div>
+            <div class="order">
+                <button onclick="make_order()" type="button" class="btn btn-primary">주문하기</button>
+            </div>
+        </div>
+        <div class="orders">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">주문자 성함</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">주소</th>
+                        <th scope="col">전화번호</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-box">
+                    <tr>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
